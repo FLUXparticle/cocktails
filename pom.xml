@@ -13,6 +13,7 @@
     <modules>
         <module>cocktails-logic</module>
         <module>cocktails-web</module>
+        <module>cocktails-test</module>
     </modules>
 
     <properties>
