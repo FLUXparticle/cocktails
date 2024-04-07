@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
+
+    <persistence-unit name="cocktails" transaction-type="JTA">
+
+<!--        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>SQLiteDataSource</jta-data-source>
+
+        <class>com.example.cocktails.logic.data.Cocktail</class>
+        <class>com.example.cocktails.logic.data.Instruction</class>
+        <class>com.example.cocktails.logic.data.Ingredient</class>
+
+        <properties>
+            <!-- Properties for TomEE -->
+            <property name="tomee.jpa.factory.lazy" value="true" />
+
+            <!-- Properties for Hibernate -->
+            <property name="hibernate.show_sql" value="true" />
+        </properties>
+    </persistence-unit>
+
+</persistence>
