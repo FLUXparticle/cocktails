@@ -25,7 +25,34 @@
         <tomee.version>8.0.16</tomee.version>
     </properties>
 
+    <distributionManagement>
+        <site>
+            <id>intern-admin</id>
+            <url>dav:http://localhost:8081/reports/</url>
+        </site>
+    </distributionManagement>
+
+    <url>http://www.example.com/</url>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.5.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav-jackrabbit</artifactId>
+                <version>3.5.3</version>
+            </extension>
+        </extensions>
+
         <plugins>
 
             <plugin>
