@@ -85,6 +85,7 @@
             <id>sonar</id>
             <properties>
                 <sonar.projectKey>cocktails</sonar.projectKey>
+                <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
             </properties>
 
             <build>
@@ -148,6 +149,92 @@
                 </dependency>
 
             </dependencies>
+        </profile>
+
+        <profile>
+            <id>jacoco</id>
+
+            <properties>
+                <jacoco.version>0.8.12</jacoco.version>
+            </properties>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                    </plugin>
+                </plugins>
+            </reporting>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <configuration>
+                            <includeCurrentProject>true</includeCurrentProject>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>jacoco-prepare-agent</id>
+                                <!--<phase>initialize</phase>-->
+                                <goals><goal>prepare-agent</goal></goals>
+                            </execution>
+<!--
+                            <execution>
+                                <id>jacoco-prepare-agent-integration</id>
+                                <phase>pre-integration-test</phase>
+                                <goals><goal>prepare-agent-integration</goal></goals>
+                            </execution>
+-->
+<!--
+                            <execution>
+                                <id>jacoco-report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+-->
+<!--
+                            <execution>
+                                <id>jacoco-check</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <rule>
+                                            <element>BUNDLE</element>
+                                            <limits>
+                                                <limit>
+                                                    <counter>COMPLEXITY</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>0.60</minimum>
+                                                </limit>
+                                            </limits>
+                                        </rule>
+                                    </rules>
+                                </configuration>
+                            </execution>
+-->
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.tomee.maven</groupId>
+                        <artifactId>tomee-maven-plugin</artifactId>
+                        <configuration>
+                            <javaagents>
+                                <javaagent>org.jacoco:org.jacoco.agent:${jacoco.version}:jar:runtime=destfile=${project.build.directory}/jacoco-it.exec</javaagent>
+                            </javaagents>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
