@@ -82,6 +82,57 @@
 
     <profiles>
         <profile>
+            <id>conflict</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.6.1</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>3.4.1</version>
+                        <executions>
+                            <execution>
+                                <id>enforce</id>
+                                <configuration>
+                                    <rules>
+                                        <dependencyConvergence/>
+                                    </rules>
+                                </configuration>
+                                <goals><goal>enforce</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <dependencies>
+                <dependency>
+                    <!-- level 2: guava 24.1.1-jre -->
+                    <groupId>info.archinnov</groupId>
+                    <artifactId>achilles-core</artifactId>
+                    <version>6.1.0</version>
+                </dependency>
+                <dependency>
+                    <!-- level 1: guava 33.0.0-android -->
+                    <groupId>com.google.truth</groupId>
+                    <artifactId>truth</artifactId>
+                    <version>1.4.2</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <!-- level 1: guava 31.0.1-jre -->
+                    <groupId>com.google.inject</groupId>
+                    <artifactId>guice</artifactId>
+                    <version>7.0.0</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
             <id>sonar</id>
             <properties>
                 <sonar.projectKey>cocktails</sonar.projectKey>
