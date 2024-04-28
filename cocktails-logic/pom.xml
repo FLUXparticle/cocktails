@@ -97,6 +97,58 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>failsafe_logic</id>
+
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>add-test-source</id>
+                                <phase>generate-test-sources</phase>
+                                <goals>
+                                    <goal>add-test-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>src/failsafe/java</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.tomee.maven</groupId>
+                        <artifactId>tomee-maven-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                    </plugin>
+
+                </plugins>
+            </build>
+
+            <dependencies>
+
+                <!-- REST-assured -->
+                <dependency>
+                    <groupId>io.rest-assured</groupId>
+                    <artifactId>rest-assured</artifactId>
+                    <version>5.4.0</version>
+                    <scope>test</scope>
+                </dependency>
+
+            </dependencies>
+        </profile>
     </profiles>
 
 </project>
