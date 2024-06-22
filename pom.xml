@@ -219,12 +219,36 @@
 -->
 
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-pdf-plugin</artifactId>
+                            <version>1.6.1</version>
+                            <executions>
+                                <execution>
+                                    <id>default-pdf</id>
+                                    <phase>site</phase>
+                                    <goals><goal>pdf</goal></goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-pdf-plugin</artifactId>
                         <version>1.6.1</version>
+                        <executions>
+                            <execution>
+                                <id>default-pdf</id>
+                                <inherited>false</inherited>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
                         <dependencies>
+
 <!--
                             <dependency>
                                 <groupId>org.apache.maven.doxia</groupId>
