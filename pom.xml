@@ -176,6 +176,18 @@
                         <plugin>
                             <groupId>org.apache.tomee.maven</groupId>
                             <artifactId>tomee-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>start-tomee</id>
+                                    <phase>pre-integration-test</phase>
+                                    <goals><goal>start</goal></goals>
+                                </execution>
+                                <execution>
+                                    <id>stop-tomee</id>
+                                    <phase>post-integration-test</phase>
+                                    <goals><goal>stop</goal></goals>
+                                </execution>
+                            </executions>
                         </plugin>
 
                         <plugin>
@@ -185,6 +197,18 @@
                             <configuration>
                                 <redirectTestOutputToFile>true</redirectTestOutputToFile>
                             </configuration>
+                            <executions>
+                                <execution>
+                                    <id>run-integration-test</id>
+                                    <!--phase>integration-test</phase-->
+                                    <goals><goal>integration-test</goal></goals>
+                                </execution>
+                                <execution>
+                                    <id>verify-integration-test</id>
+                                    <!--phase>verify</phase-->
+                                    <goals><goal>verify</goal></goals>
+                                </execution>
+                            </executions>
                         </plugin>
                     </plugins>
                 </pluginManagement>
