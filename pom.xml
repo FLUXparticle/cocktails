@@ -26,6 +26,16 @@
     </properties>
 
     <distributionManagement>
+        <repository>
+            <id>intern-admin</id>
+            <name>Releases</name>
+            <url>http://localhost:8081/repository/maven-intern</url>
+        </repository>
+        <snapshotRepository>
+            <id>intern-admin</id>
+            <name>Snapshot</name>
+            <url>http://localhost:8081/repository/maven-intern</url>
+        </snapshotRepository>
         <site>
             <id>intern-admin</id>
             <url>dav:http://localhost:8081/reports/</url>
@@ -33,6 +43,10 @@
     </distributionManagement>
 
     <url>http://www.example.com/</url>
+
+    <scm>
+        <developerConnection>scm:git:file://${project.basedir}</developerConnection>
+    </scm>
 
     <reporting>
         <plugins>
@@ -293,6 +307,44 @@
             </build>
 
 
+        </profile>
+
+        <profile>
+            <id>release</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>3.0.1</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>dependency-updates</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                        <version>2.16.2</version>
+                        <configuration>
+                            <allowMajorUpdates>false</allowMajorUpdates>
+                            <ignoredVersions>.+-.+</ignoredVersions>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals><goal>display-dependency-updates</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
