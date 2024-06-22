@@ -82,9 +82,61 @@
 
     <profiles>
         <profile>
+            <id>conflict</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.6.1</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>3.4.1</version>
+                        <executions>
+                            <execution>
+                                <id>enforce</id>
+                                <configuration>
+                                    <rules>
+                                        <dependencyConvergence/>
+                                    </rules>
+                                </configuration>
+                                <goals><goal>enforce</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <dependencies>
+                <dependency>
+                    <!-- level 2: guava 24.1.1-jre -->
+                    <groupId>info.archinnov</groupId>
+                    <artifactId>achilles-core</artifactId>
+                    <version>6.1.0</version>
+                </dependency>
+                <dependency>
+                    <!-- level 1: guava 33.0.0-android -->
+                    <groupId>com.google.truth</groupId>
+                    <artifactId>truth</artifactId>
+                    <version>1.4.2</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <!-- level 1: guava 31.0.1-jre -->
+                    <groupId>com.google.inject</groupId>
+                    <artifactId>guice</artifactId>
+                    <version>7.0.0</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
             <id>sonar</id>
             <properties>
                 <sonar.projectKey>cocktails</sonar.projectKey>
+                <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
             </properties>
 
             <build>
@@ -148,6 +200,92 @@
                 </dependency>
 
             </dependencies>
+        </profile>
+
+        <profile>
+            <id>jacoco</id>
+
+            <properties>
+                <jacoco.version>0.8.12</jacoco.version>
+            </properties>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                    </plugin>
+                </plugins>
+            </reporting>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <configuration>
+                            <includeCurrentProject>true</includeCurrentProject>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>jacoco-prepare-agent</id>
+                                <!--<phase>initialize</phase>-->
+                                <goals><goal>prepare-agent</goal></goals>
+                            </execution>
+<!--
+                            <execution>
+                                <id>jacoco-prepare-agent-integration</id>
+                                <phase>pre-integration-test</phase>
+                                <goals><goal>prepare-agent-integration</goal></goals>
+                            </execution>
+-->
+<!--
+                            <execution>
+                                <id>jacoco-report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+-->
+<!--
+                            <execution>
+                                <id>jacoco-check</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <rule>
+                                            <element>BUNDLE</element>
+                                            <limits>
+                                                <limit>
+                                                    <counter>COMPLEXITY</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>0.60</minimum>
+                                                </limit>
+                                            </limits>
+                                        </rule>
+                                    </rules>
+                                </configuration>
+                            </execution>
+-->
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.tomee.maven</groupId>
+                        <artifactId>tomee-maven-plugin</artifactId>
+                        <configuration>
+                            <javaagents>
+                                <javaagent>org.jacoco:org.jacoco.agent:${jacoco.version}:jar:runtime=destfile=${project.build.directory}/jacoco-it.exec</javaagent>
+                            </javaagents>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
         </profile>
     </profiles>
 

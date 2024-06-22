@@ -78,6 +78,74 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>failsafe_test</id>
+
+            <properties>
+                <selenium.version>4.17.0</selenium.version>
+            </properties>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>add-test-source</id>
+                                <phase>generate-test-sources</phase>
+                                <goals>
+                                    <goal>add-test-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>src/failsafe/java</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.tomee.maven</groupId>
+                        <artifactId>tomee-maven-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <dependencies>
+
+                <!-- Junit 4 -->
+                <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <version>${junit4.version}</version>
+                    <scope>test</scope>
+                </dependency>
+
+                <!-- Selenium -->
+                <dependency>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-firefox-driver</artifactId>
+                    <version>${selenium.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-support</artifactId>
+                    <version>${selenium.version}</version>
+                    <scope>test</scope>
+                </dependency>
+
+            </dependencies>
+        </profile>
     </profiles>
 
 </project>
