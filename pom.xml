@@ -284,6 +284,10 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>versions-maven-plugin</artifactId>
                         <version>2.16.2</version>
+                        <configuration>
+                            <allowMajorUpdates>false</allowMajorUpdates>
+                            <ignoredVersions>.+-.+</ignoredVersions>
+                        </configuration>
                         <executions>
                             <execution>
                                 <phase>validate</phase>
